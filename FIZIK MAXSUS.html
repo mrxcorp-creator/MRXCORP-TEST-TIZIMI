@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MRX CORP Test Tizimi</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #4361ee;
+            --secondary-color: #3f37c9;
+            --accent-color: #4895ef;
+            --light-color: #f8f9fa;
+            --dark-color: #212529;
+            --success-color: #4cc9f0;
+            --danger-color: #f72585;
+            --warning-color: #f8961e;
+            --border-radius: 12px;
+            --box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f5f7fa;
+            color: var(--dark-color);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+        
+        .card {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            overflow: hidden;
+            margin-bottom: 30px;
+            transition: transform 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .card-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .card-body {
+            padding: 30px;
+        }
+        
+        h1, h2, h3, h4 {
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+        
+        h1 {
+            font-size: 28px;
+        }
+        
+        h2 {
+            font-size: 24px;
+            color: var(--primary-color);
+        }
+        
+        h3 {
+            font-size: 20px;
+            margin-bottom: 15px;
+        }
+        
+        h4 {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--dark-color);
+        }
+        
+        input[type="text"], input[type="password"], textarea, select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e9ecef;
+            border-radius: var(--border-radius);
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        input[type="text"]:focus, input[type="password"]:focus, textarea:focus, select:focus {
+            border-color: var(--accent-color);
+            outline: none;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            text-align: center;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+        }
+        
+        .btn-block {
+            display: block;
+            width: 100%;
+        }
+        
+        .btn-danger {
+            background: linear-gradient(135deg, var(--danger-color), #b5179e);
+        }
+        
+        .btn-warning {
+            background: linear-gradient(135deg, var(--warning-color), #f3722c);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #4cc9f0, #4895ef);
+        }
+        
+        .question {
+            margin-bottom: 25px;
+            padding: 20px;
+            background-color: var(--light-color);
+            border-radius: var(--border-radius);
+            border-left: 4px solid var(--accent-color);
+        }
+        
+        .options {
+            margin-top: 15px;
+        }
+        
+        .option {
+            display: block;
+            margin-bottom: 10px;
+            padding: 10px 15px;
+            background-color: white;
+            border-radius: var(--border-radius);
+            border: 1px solid #e9ecef;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .option:hover {
+            background-color: #f8f9fa;
+            border-color: var(--accent-color);
+        }
+        
+        .option input {
+            margin-right: 10px;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .result-container {
+            text-align: center;
+            padding: 30px;
+        }
+        
+        .progress-container {
+            width: 100%;
+            height: 20px;
+            background-color: #e9ecef;
+            border-radius: 10px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--success-color), var(--accent-color));
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+        
+        .score {
+            font-size: 24px;
+            font-weight: 700;
+            margin: 20px 0;
+            color: var(--primary-color);
+        }
+        
+        .bot-response {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: var(--border-radius);
+            border-left: 4px solid var(--success-color);
+        }
+        
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+            margin-right: 10px;
+        }
+        
+        .admin-panel {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: var(--border-radius);
+        }
+        
+        .question-form {
+            margin-bottom: 20px;
+        }
+        
+        .question-list {
+            margin-top: 20px;
+        }
+        
+        .question-item {
+            padding: 15px;
+            background-color: white;
+            border-radius: var(--border-radius);
+            margin-bottom: 15px;
+            border-left: 4px solid var(--accent-color);
+            position: relative;
+        }
+        
+        .edit-question-btn {
+            position: absolute;
+            top: 15px;
+            right: 100px;
+        }
+        
+        .password-prompt {
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        .alert {
+            padding: 15px;
+            border-radius: var(--border-radius);
+            margin-bottom: 20px;
+            color: white;
+        }
+        
+        .alert-danger {
+            background-color: var(--danger-color);
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                margin: 20px auto;
+                padding: 0 15px;
+            }
+            
+            .card-body {
+                padding: 20px;
+            }
+            
+            .edit-question-btn {
+                position: static;
+                display: block;
+                margin-top: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Kirish qismi -->
+        <div class="card" id="intro-section">
+            <div class="card-header">
+                <h1>44-makatb uchun</h1>
+            </div>
+            <div class="card-body">
+                <div class="form-group">
+                    <label for="name">Ismingizni kiriting:</label>
+                    <input type="text" id="name" placeholder="Ism familiyangiz">
+                </div>
+                <button class="btn btn-block" onclick="startTest()">Testni boshlash</button>
+                
+                <!-- Admin paneli uchun tugma -->
+                <div style="margin-top: 20px; text-align: center;">
+                    <button class="btn btn-warning" onclick="showPasswordPrompt()">Admin Panel</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Parol so'rov qismi -->
+        <div class="card hidden" id="password-prompt">
+            <div class="card-header">
+                <h2>Admin Panelga Kirish</h2>
+            </div>
+            <div class="card-body">
+                <div class="password-prompt">
+                    <div class="form-group">
+                        <label for="admin-password">Parolni kiriting:</label>
+                        <input type="password" id="admin-password" placeholder="Parol">
+                    </div>
+                    <button class="btn btn-block" onclick="checkAdminPassword()">Kirish</button>
+                    <div id="password-error" class="alert alert-danger hidden" style="margin-top: 15px;">
+                        Noto'g'ri parol! Iltimos, qayta urunib ko'ring.
+                    </div>
+                    <button class="btn btn-danger btn-block" style="margin-top: 15px;" onclick="hidePasswordPrompt()">Orqaga</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Test qismi -->
+        <div class="card hidden" id="test-section">
+            <div class="card-header">
+                <h2 id="test-title">Fizika Testi</h2>
+                <p id="user-greeting"></p>
+            </div>
+            <div class="card-body" id="questions-container">
+                <!-- Savollar shu yerda dinamik ravishda yuklanadi -->
+            </div>
+        </div>
+        
+        <!-- Natijalar qismi -->
+        <div class="card hidden" id="result-section">
+            <div class="card-header">
+                <h2>Test natijalari</h2>
+            </div>
+            <div class="card-body">
+                <div class="result-container">
+                    <p id="result-text"></p>
+                    <div class="progress-container">
+                        <div class="progress-bar" id="progress-bar"></div>
+                    </div>
+                    <div class="score" id="score"></div>
+                </div>
+                
+                <div class="bot-response">
+                    <h3>Telegram botga yuborildi</h3>
+                    <p id="bot-message"></p>
+                    <!-- Telegram guruhiga havola qo'shiladi -->
+                </div>
+                
+                <button class="btn btn-block" onclick="restartTest()">Yana Test Ishlash</button>
+            </div>
+        </div>
+        
+        <!-- Admin paneli -->
+        <div class="card hidden" id="admin-panel">
+            <div class="card-header">
+                <h2>Admin Panel - Savollarni Boshqarish</h2>
+            </div>
+            <div class="card-body">
+                <div class="admin-panel">
+                    <h3>Yangi Savol Qo'shish</h3>
+                    <div class="question-form">
+                        <div class="form-group">
+                            <label for="new-question-text">Savol matni:</label>
+                            <textarea id="new-question-text" rows="3"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Variantlar:</label>
+                            <div class="form-group">
+                                <input type="text" id="option-a" placeholder="Variant A">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" id="option-b" placeholder="Variant B">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" id="option-c" placeholder="Variant C">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" id="option-d" placeholder="Variant D">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="correct-answer">To'g'ri javob:</label>
+                            <select id="correct-answer">
+                                <option value="a">Variant A</option>
+                                <option value="b">Variant B</option>
+                                <option value="c">Variant C</option>
+                                <option value="d">Variant D</option>
+                            </select>
+                        </div>
+                        <button class="btn btn-block" onclick="addQuestion()">Savol Qo'shish</button>
+                    </div>
+                    
+                    <div class="question-list" id="question-list">
+                        <h3>Mavjud Savollar <small>(Jami: <span id="questions-count">0</span> ta)</small></h3>
+                        <!-- Savollar ro'yxati shu yerda ko'rsatiladi -->
+                    </div>
+                    
+                    <button class="btn btn-block" onclick="saveQuestions()">Savollarni Saqlash</button>
+                    <button class="btn btn-danger btn-block" onclick="exitAdminPanel()">Admin Paneldan Chiqish</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Telegram bot konfiguratsiyasi
+        const BOT_TOKEN = '7470423172:AAEjMcNxdbTmzIYKyKcC4EXAyw2-VX-YpdM';
+        const CHAT_ID = '7916318235';
+        const ADMIN_PASSWORD = '1q2w3e'; // Admin panel paroli
+        const TELEGRAM_GROUP_LINK = 'https://t.me/fizik_404';
+        
+        // Savollar bazasi
+        let questions = [
+            {
+                text: "Jism tezlanishini topish (nishab tekislikda):",
+                options: {
+                    a: "a = g · cos α",
+                    b: "a = g · tan α",
+                    c: "a = g · sin α",
+                    d: "a = g / sin α"
+                },
+                correctAnswer: "c"
+            },
+            {
+                text: "Teng tezlanuvchan harakatda boshlangʻich va oxirgi tezlik:",
+                options: {
+                    a: "v = v₀ - a t",
+                    b: "v = v₀ / a t",
+                    c: "v = v₀ + a t",
+                    d: "v = a t²"
+                },
+                correctAnswer: "c"
+            },
+            {
+                text: "Gorizontga burchak ostida otilgan jismning uchish masofasi:",
+                options: {
+                    a: "R = (v₀ sin θ) / g",
+                    b: "R = (v₀² sin θ) / g",
+                    c: "R = (v₀² sin 2θ) / g",
+                    d: "R = v₀ cos θ · t"
+                },
+                correctAnswer: "c"
+            },
+            {
+                text: "Tik yuqoriga otilgan jismning maksimal balandligi:",
+                options: {
+                    a: "h = v₀ t - (g t²)/2",
+                    b: "h = v₀ / g",
+                    c: "h = v₀² / 2g",
+                    d: "h = v₀² / g"
+                },
+                correctAnswer: "c"
+            },
+            {
+                text: "Kuch taʼsiridagi tezlik (Nyutonning II qonuni):",
+                options: {
+                    a: "v = F · m · t",
+                    b: "v = v₀ + (F/m) · t",
+                    c: "v = F / m",
+                    d: "v = (m/F) · t"
+                },
+                correctAnswer: "b"
+            },
+            {
+                text: "Ikki yukli sistemaning tezlanishi (Atwood mashinasi):",
+                options: {
+                    a: "a = (m₁ + m₂)/(m₂ - m₁) · g",
+                    b: "a = (m₂ - m₁)/(m₁ + m₂) · g",
+                    c: "a = g / (m₁ + m₂)",
+                    d: "a = (m₂ - m₁) · g"
+                },
+                correctAnswer: "b"
+            },
+            {
+                text: "Ogʻirlikning tezlanish bilan bogʻliqligi (koʻtarilganda):",
+                options: {
+                    a: "W = m (g - a)",
+                    b: "W = m (g + a)",
+                    c: "W = m / (g + a)",
+                    d: "W = m a"
+                },
+                correctAnswer: "b"
+            },
+            {
+                text: "Impuls va kuch (zarba davomiyligi):",
+                options: {
+                    a: "F = Δp · Δt",
+                    b: "F = Δt / Δp",
+                    c: "F = Δp / Δt",
+                    d: "F = m · Δp"
+                },
+                correctAnswer: "c"
+            },
+            {
+                text: "Prujinaning siqilishi (energiyaning saqlanishi):",
+                options: {
+                    a: "x = v √(m/k)",
+                    b: "x = v / k",
+                    c: "x = m v k",
+                    d: "x = k / (m v)"
+                },
+                correctAnswer: "a"
+            },
+            {
+                text: "Dvigatel FIK (foydali ish koeffitsienti):",
+                options: {
+                    a: "η = Q / W",
+                    b: "η = (W/Q) × 100%",
+                    c: "η = W + Q",
+                    d: "η = (Q - W)/Q"
+                },
+                correctAnswer: "b"
+            },
+            {
+                text: "Izobarik jarayonda ichki energiyaning oʻzgarishi:",
+                options: {
+                    a: "ΔU = P ΔV",
+                    b: "ΔU = (3/2) P ΔV",
+                    c: "ΔU = (5/2) P ΔV",
+                    d: "ΔU = (1/2) P ΔV"
+                },
+                correctAnswer: "b"
+            },
+            {
+                text: "Nisbiy namlik:",
+                options: {
+                    a: "φ = ρ_bug · ρ_toyigan",
+                    b: "φ = (ρ_bug / ρ_toyigan) × 100%",
+                    c: "φ = ρ_toyigan - ρ_bug",
+                    d: "φ = ρ_toyigan / ρ_bug"
+                },
+                correctAnswer: "b"
+            },
+            {
+                text: "Elektronlarning tezligi (tok zichligi):",
+                options: {
+                    a: "v_d = I · n · e",
+                    b: "v_d = I / (n e A)",
+                    c: "v_d = n e / (I A)",
+                    d: "v_d = A / (n e I)"
+                },
+                correctAnswer: "b"
+            },
+            {
+                text: "Transformator kuchlanishi:",
+                options: {
+                    a: "U₁/U₂ = N₂/N₁",
+                    b: "U₁/U₂ = N₁/N₂",
+                    c: "U₁ · U₂ = N₁ · N₂",
+                    d: "U₁/N₁ = U₂/N₂"
+                },
+                correctAnswer: "b"
+            },
+            {
+                text: "Kondensator energiyasi:",
+                options: {
+                    a: "W = C U",
+                    b: "W = (C U²)/2",
+                    c: "W = U² / C",
+                    d: "W = 2 / (C U²)"
+                },
+                correctAnswer: "b"
+            },
+            {
+                text: "Tok quvvati:",
+                options: {
+                    a: "P = I / U",
+                    b: "P = I · U",
+                    c: "P = I + U",
+                    d: "P = U / I"
+                },
+                correctAnswer: "b"
+            },
+            {
+                text: "Zanjir qismidagi kuchlanish:",
+                options: {
+                    a: "U = I / R",
+                    b: "U = I · R",
+                    c: "U = R / I",
+                    d: "U = I + R"
+                },
+                correctAnswer: "b"
+            },
+            {
+                text: "Induktiv qarshilik:",
+                options: {
+                    a: "X_L = 2π / (f L)",
+                    b: "X_L = 2π f L",
+                    c: "X_L = f L / 2π",
+                    d: "X_L = L / (2π f)"
+                },
+                correctAnswer: "b"
+            },
+            {
+                text: "Tok manbai EYUK (Ohm qonuni):",
+                options: {
+                    a: "ℰ = I / (R + r)",
+                    b: "ℰ = I (R + r)",
+                    c: "ℰ = I · R · r",
+                    d: "ℰ = (R + r) / I"
+                },
+                correctAnswer: "b"
+            },
+            {
+                text: "Rezonans chastotasi:",
+                options: {
+                    a: "f = 2π √(L C)",
+                    b: "f = 1 / (2π √(L C))",
+                    c: "f = √(L C) / 2π",
+                    d: "f = 2π / (L C)"
+                },
+                correctAnswer: "b"
+            }
+        ];
+        let currentEditingIndex = -1; // Tahrirlanayotgan savol indeksi
+        
+        // Sahifa yuklanganda
+        document.addEventListener('DOMContentLoaded', function() {
+            loadQuestions();
+        });
+        
+        function loadQuestions() {
+            const savedQuestions = localStorage.getItem('test-questions');
+            if (savedQuestions) {
+                questions = JSON.parse(savedQuestions);
+            }
+            updateQuestionsCount();
+        }
+        
+        function saveQuestionsToStorage() {
+            localStorage.setItem('test-questions', JSON.stringify(questions));
+            updateQuestionsCount();
+        }
+        
+        function updateQuestionsCount() {
+            document.getElementById('questions-count').textContent = questions.length;
+        }
+        
+        function startTest() {
+            const name = document.getElementById('name').value.trim();
+            
+            if (!name) {
+                alert('Iltimos, ismingizni kiriting!');
+                return;
+            }
+            
+            // Kirish qismini yashirish
+            document.getElementById('intro-section').classList.add('hidden');
+            
+            // Test qismini ko'rsatish
+            document.getElementById('test-section').classList.remove('hidden');
+            
+            // Foydalanuvchi ma'lumotlarini ko'rsatish
+            document.getElementById('user-greeting').textContent = `Hurmatli ${name}, testni boshlashingiz mumkin!`;
+            
+            // Savollarni yuklash
+            renderQuestions();
+        }
+        
+        function restartTest() {
+            document.getElementById('result-section').classList.add('hidden');
+            document.getElementById('intro-section').classList.remove('hidden');
+            document.getElementById('name').value = '';
+        }
+        
+        function renderQuestions() {
+            const container = document.getElementById('questions-container');
+            container.innerHTML = '';
+            
+            if (questions.length === 0) {
+                container.innerHTML = '<p>Hozircha savollar mavjud emas. Iltimos, admin panel orqali savol qo\'shing.</p>';
+                return;
+            }
+            
+            questions.forEach((question, index) => {
+                const questionElement = document.createElement('div');
+                questionElement.className = 'question';
+                questionElement.id = `q${index + 1}`;
+                
+                questionElement.innerHTML = `
+                    <h3>Savol ${index + 1}: ${question.text}</h3>
+                    <div class="options">
+                        <label class="option">
+                            <input type="radio" name="q${index + 1}" value="a"> ${question.options.a}
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q${index + 1}" value="b"> ${question.options.b}
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q${index + 1}" value="c"> ${question.options.c}
+                        </label>
+                        <label class="option">
+                            <input type="radio" name="q${index + 1}" value="d"> ${question.options.d}
+                        </label>
+                    </div>
+                `;
+                
+                container.appendChild(questionElement);
+            });
+            
+            // Testni yakunlash tugmasi
+            const submitButton = document.createElement('button');
+            submitButton.className = 'btn btn-block';
+            submitButton.onclick = submitTest;
+            submitButton.innerHTML = `
+                <span id="btn-text">Testni yakunlash</span>
+                <span class="loading hidden" id="loading-icon"></span>
+            `;
+            container.appendChild(submitButton);
+        }
+        
+        async function submitTest() {
+            // Foydalanuvchi ma'lumotlari
+            const name = document.getElementById('name').value.trim();
+            
+            // Javoblarni tekshirish
+            let allAnswered = true;
+            const answers = {};
+            
+            questions.forEach((_, index) => {
+                const answer = document.querySelector(`input[name="q${index + 1}"]:checked`)?.value;
+                if (!answer) {
+                    allAnswered = false;
+                } else {
+                    answers[`q${index + 1}`] = answer;
+                }
+            });
+            
+            if (!allAnswered) {
+                alert('Iltimos, barcha savollarga javob bering!');
+                return;
+            }
+            
+            // Yuklanish animatsiyasini ko'rsatish
+            document.getElementById('btn-text').classList.add('hidden');
+            document.getElementById('loading-icon').classList.remove('hidden');
+            document.querySelector('#questions-container button').disabled = true;
+            
+            // Natijalarni hisoblash
+            let score = 0;
+            questions.forEach((question, index) => {
+                if (answers[`q${index + 1}`] === question.correctAnswer) {
+                    score++;
+                }
+            });
+            
+            const percentage = Math.round((score / questions.length) * 100);
+            
+            // Natijalarni ko'rsatish
+            document.getElementById('test-section').classList.add('hidden');
+            document.getElementById('result-section').classList.remove('hidden');
+            
+            document.getElementById('result-text').textContent = 
+                `${name}, siz ${score} ta savolga to'g'ri javob berdingiz`;
+            document.getElementById('score').textContent = `${percentage}%`;
+            document.getElementById('progress-bar').style.width = `${percentage}%`;
+            
+            // Natijalarni botga yuborish
+            try {
+                const botMessage = await sendToTelegramBot(name, score, percentage, questions.length);
+                document.getElementById('bot-message').textContent = botMessage;
+                
+                // "NATIJA E'LON GURUHI" tugmasini yaratish
+                const telegramButton = document.createElement('a');
+                telegramButton.href = TELEGRAM_GROUP_LINK;
+                telegramButton.target = "_blank";
+                telegramButton.className = 'btn btn-success btn-block';
+                telegramButton.style.marginTop = '15px';
+                telegramButton.innerHTML = '📢 NATIJA EʼLON GURUHI';
+                
+                document.querySelector('.bot-response').appendChild(telegramButton);
+            } catch (error) {
+                console.error('Xatolik:', error);
+                document.getElementById('bot-message').textContent = 
+                    "Natijalarni botga yuborishda xatolik yuz berdi. Iltimos, keyinroq urunib ko'ring.";
+            }
+            
+            // Yuklanish animatsiyasini yashirish
+            document.getElementById('btn-text').classList.remove('hidden');
+            document.getElementById('loading-icon').classList.add('hidden');
+            document.querySelector('#questions-container button').disabled = false;
+        }
+        
+        async function sendToTelegramBot(name, score, percentage, totalQuestions) {
+            const message = `📊 Yangi test natijasi:\n\n👤 Foydalanuvchi: ${name}\n✅ To'g'ri javoblar: ${score}/${totalQuestions}\n📈 Foiz: ${percentage}%\n⏰ Sana: ${new Date().toLocaleString()}`;
+            
+            const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
+            
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    chat_id: CHAT_ID,
+                    text: message,
+                    parse_mode: 'HTML'
+                })
+            });
+            
+            const data = await response.json();
+            
+            if (data.ok) {
+                return `Natijangiz Telegram botga muvaffaqiyatli yuborildi!`;
+            } else {
+                throw new Error(data.description || 'Nomaʼlum xatolik');
+            }
+        }
+        
+        function showPasswordPrompt() {
+            document.getElementById('intro-section').classList.add('hidden');
+            document.getElementById('password-prompt').classList.remove('hidden');
+            document.getElementById('password-error').classList.add('hidden');
+            document.getElementById('admin-password').value = '';
+        }
+        
+        function hidePasswordPrompt() {
+            document.getElementById('password-prompt').classList.add('hidden');
+            document.getElementById('intro-section').classList.remove('hidden');
+        }
+        
+        function checkAdminPassword() {
+            const password = document.getElementById('admin-password').value;
+            
+            if (password === ADMIN_PASSWORD) {
+                document.getElementById('password-prompt').classList.add('hidden');
+                document.getElementById('admin-panel').classList.remove('hidden');
+                renderQuestionList();
+            } else {
+                document.getElementById('password-error').classList.remove('hidden');
+            }
+        }
+        
+        function exitAdminPanel() {
+            document.getElementById('admin-panel').classList.add('hidden');
+            document.getElementById('intro-section').classList.remove('hidden');
+            resetQuestionForm();
+        }
+        
+        function addQuestion() {
+            const text = document.getElementById('new-question-text').value.trim();
+            const optionA = document.getElementById('option-a').value.trim();
+            const optionB = document.getElementById('option-b').value.trim();
+            const optionC = document.getElementById('option-c').value.trim();
+            const optionD = document.getElementById('option-d').value.trim();
+            const correctAnswer = document.getElementById('correct-answer').value;
+            
+            if (!text || !optionA || !optionB || !optionC || !optionD) {
+                alert('Iltimos, barcha maydonlarni to\'ldiring!');
+                return;
+            }
+            
+            const newQuestion = {
+                text: text,
+                options: {
+                    a: optionA,
+                    b: optionB,
+                    c: optionC,
+                    d: optionD
+                },
+                correctAnswer: correctAnswer
+            };
+            
+            if (currentEditingIndex >= 0) {
+                // Savolni tahrirlash
+                questions[currentEditingIndex] = newQuestion;
+                currentEditingIndex = -1;
+                document.getElementById('new-question-text').nextElementSibling.textContent = "Savol matni:";
+            } else {
+                // Yangi savol qo'shish
+                questions.push(newQuestion);
+            }
+            
+            renderQuestionList();
+            resetQuestionForm();
+        }
+        
+        function resetQuestionForm() {
+            document.getElementById('new-question-text').value = '';
+            document.getElementById('option-a').value = '';
+            document.getElementById('option-b').value = '';
+            document.getElementById('option-c').value = '';
+            document.getElementById('option-d').value = '';
+            document.getElementById('correct-answer').value = 'a';
+            currentEditingIndex = -1;
+        }
+        
+        function renderQuestionList() {
+            const container = document.getElementById('question-list');
+            container.innerHTML = '<h3>Mavjud Savollar <small>(Jami: <span id="questions-count">' + questions.length + '</span> ta)</small></h3>';
+            
+            if (questions.length === 0) {
+                container.innerHTML += '<p>Hozircha savollar mavjud emas</p>';
+                return;
+            }
+            
+            questions.forEach((question, index) => {
+                const questionElement = document.createElement('div');
+                questionElement.className = 'question-item';
+                
+                questionElement.innerHTML = `
+                    <h4>Savol ${index + 1}: ${question.text}</h4>
+                    <p><strong>A)</strong> ${question.options.a} ${question.correctAnswer === 'a' ? '✅' : ''}</p>
+                    <p><strong>B)</strong> ${question.options.b} ${question.correctAnswer === 'b' ? '✅' : ''}</p>
+                    <p><strong>C)</strong> ${question.options.c} ${question.correctAnswer === 'c' ? '✅' : ''}</p>
+                    <p><strong>D)</strong> ${question.options.d} ${question.correctAnswer === 'd' ? '✅' : ''}</p>
+                    <button class="btn btn-warning edit-question-btn" onclick="editQuestion(${index})">Tahrirlash</button>
+                    <button class="btn btn-danger" onclick="deleteQuestion(${index})" style="margin-top: 10px;">O'chirish</button>
+                `;
+                
+                container.appendChild(questionElement);
+            });
+        }
+        
+        function editQuestion(index) {
+            const question = questions[index];
+            currentEditingIndex = index;
+            
+            document.getElementById('new-question-text').value = question.text;
+            document.getElementById('option-a').value = question.options.a;
+            document.getElementById('option-b').value = question.options.b;
+            document.getElementById('option-c').value = question.options.c;
+            document.getElementById('option-d').value = question.options.d;
+            document.getElementById('correct-answer').value = question.correctAnswer;
+            
+            document.getElementById('new-question-text').nextElementSibling.textContent = "Savol matni (tahrirlanmoqda):";
+            
+            // Sahifani yangi savol qismiga aylantiramiz
+            window.scrollTo({
+                top: document.getElementById('new-question-text').offsetTop - 100,
+                behavior: 'smooth'
+            });
+        }
+        
+        function deleteQuestion(index) {
+            if (confirm('Bu savolni o\'chirishni istaysizmi?')) {
+                questions.splice(index, 1);
+                renderQuestionList();
+                updateQuestionsCount();
+            }
+        }
+        
+        function saveQuestions() {
+            saveQuestionsToStorage();
+            alert('Savollar muvaffaqiyatli saqlandi!');
+        }
+    </script>
+</body>
+</html>
